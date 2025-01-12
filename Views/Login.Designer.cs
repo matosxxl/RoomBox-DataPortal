@@ -1,6 +1,6 @@
 ﻿namespace RoomBox___DataPortal
 {
-    partial class Form1
+    partial class Login
     {
         /// <summary>
         ///  Required designer variable.
@@ -43,7 +43,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Rockwell", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(566, 216);
+            label1.Location = new Point(343, 209);
             label1.Name = "label1";
             label1.Size = new Size(193, 46);
             label1.TabIndex = 0;
@@ -51,9 +51,11 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(566, 38);
+            pictureBox1.Image = Properties.Resources.WhatsApp_Image_2024_11_27_at_20_15_06_f32f685a;
+            pictureBox1.Location = new Point(343, 31);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(193, 157);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
@@ -61,7 +63,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(562, 281);
+            label2.Location = new Point(339, 274);
             label2.Name = "label2";
             label2.Size = new Size(197, 28);
             label2.TabIndex = 2;
@@ -69,7 +71,7 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(566, 380);
+            txtUsername.Location = new Point(343, 373);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(193, 31);
             txtUsername.TabIndex = 3;
@@ -78,7 +80,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(566, 356);
+            label3.Location = new Point(343, 349);
             label3.Name = "label3";
             label3.Size = new Size(148, 21);
             label3.TabIndex = 4;
@@ -88,7 +90,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(566, 437);
+            label4.Location = new Point(343, 430);
             label4.Name = "label4";
             label4.Size = new Size(92, 21);
             label4.TabIndex = 6;
@@ -96,25 +98,27 @@
             // 
             // txtClave
             // 
-            txtClave.Location = new Point(566, 461);
+            txtClave.Location = new Point(343, 454);
             txtClave.Name = "txtClave";
             txtClave.Size = new Size(193, 31);
             txtClave.TabIndex = 5;
+            txtClave.UseSystemPasswordChar = true;
             // 
             // btnIniciarSesion
             // 
-            btnIniciarSesion.Location = new Point(566, 541);
+            btnIniciarSesion.Location = new Point(343, 534);
             btnIniciarSesion.Name = "btnIniciarSesion";
             btnIniciarSesion.Size = new Size(193, 54);
             btnIniciarSesion.TabIndex = 7;
             btnIniciarSesion.Text = "Iniciar sesion";
             btnIniciarSesion.UseVisualStyleBackColor = true;
+            btnIniciarSesion.Click += btnIniciarSesion_Click;
             // 
-            // Form1
+            // Login
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1329, 646);
+            ClientSize = new Size(917, 640);
             Controls.Add(btnIniciarSesion);
             Controls.Add(label4);
             Controls.Add(txtClave);
@@ -123,7 +127,7 @@
             Controls.Add(label2);
             Controls.Add(pictureBox1);
             Controls.Add(label1);
-            Name = "Form1";
+            Name = "Login";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

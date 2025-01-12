@@ -1,17 +1,22 @@
+using log4net;
+
 namespace RoomBox___DataPortal
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        //private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            //log4net.Config.XmlConfigurator.Configure();
+            //logger.Info("Preparando el ambiente para ejecutar el programa...");
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            //logger.Info("Portal administrativo iniciado satisfactoriamente");
+            Application.Run(new Login());
+            //logger.Info("Portal administrativo cerrado satisfactoriamente");
         }
     }
 }
