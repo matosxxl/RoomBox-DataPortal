@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using RoomBox___DataPortal.Dtos;
+using RoomBox___DataPortal.Service;
 using System.Configuration;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -12,8 +13,6 @@ namespace RoomBox___DataPortal
         public Login()
         {
             InitializeComponent();
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(ConfigurationManager.AppSettings["BaseAddress"]!);
         }
 
         private async void btnIniciarSesion_Click(object sender, EventArgs e)
@@ -21,10 +20,23 @@ namespace RoomBox___DataPortal
 
             string username = txtUsername.Text;
             string clave = txtClave.Text;
+            Api http = Api.getInstance();
 
-            LoginResponse loginResult = await tryLogin(username, clave);
+            btnIniciarSesion.Enabled = false;
+            LoginResponse loginResult = await http.tryLogin(username, clave);
 
-            using (Dashboard dashboard = new Dashboard())
+            if (loginResult == null)
+            {
+                MessageBox.Show("Por favor compruebe las credenciales e intente de nuevo", "Inicio de sesion fallido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnIniciarSesion.Enabled = true;
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Inicio de sesion exitoso!", "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            using (Dashboard dashboard = new Dashboard(loginResult))
             {
                 this.Hide();
                 DialogResult result = dashboard.ShowDialog();
@@ -34,30 +46,7 @@ namespace RoomBox___DataPortal
                 }
             }
             this.Show();
-        }
-
-        private async Task<LoginResponse> tryLogin (string username, string password)
-        {
-            LoginRequest loginRequest = new LoginRequest()
-            {
-                user_name = username,
-                password = password
-            };
-
-            var data = JsonConvert.SerializeObject(loginRequest);
-            var jsonRequest = new StringContent(data, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var res = await _httpClient.PostAsync($"/api/auth/login/", jsonRequest);
-                res.EnsureSuccessStatusCode();
-                var resContent = await res.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<LoginResponse>(resContent);
-            }
-            catch (Exception ex)
-            {
-               return null;
-            }
+            btnIniciarSesion.Enabled = true;
         }
 
     }

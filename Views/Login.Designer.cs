@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             label1 = new Label();
             pictureBox1 = new PictureBox();
             label2 = new Label();
@@ -43,7 +44,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Rockwell", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(343, 209);
+            label1.Location = new Point(339, 209);
             label1.Name = "label1";
             label1.Size = new Size(193, 46);
             label1.TabIndex = 0;
@@ -51,10 +52,10 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.WhatsApp_Image_2024_11_27_at_20_15_06_f32f685a;
-            pictureBox1.Location = new Point(343, 31);
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(339, 12);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(193, 157);
+            pictureBox1.Size = new Size(197, 177);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;

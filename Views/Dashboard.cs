@@ -11,25 +11,21 @@ using LiveCharts.Wpf; //The WPF controls
 using LiveCharts.WinForms; //the WinForm wrappers
 using System.Windows.Forms;
 using RoomBox___DataPortal.Dtos;
+using C1.Win.Chart;
+using RoomBox___DataPortal.Views;
 
 namespace RoomBox___DataPortal
 {
     public partial class Dashboard : Form
     {
-        public Dashboard( string access_token, string refresh_token, string user_type)
+        readonly ListadoArticulos _listadoArticulosForm;
+        readonly InitialDashboardView _initialDashboardView;
+        public Dashboard(LoginResponse loginInfo)
         {
             InitializeComponent();
 
-            var salesData = new List<SalesDto>();
-            salesData.Add(new SalesDto() { Mes = "Enero", Ventas = 2500, Gastos = 1200 });
-            salesData.Add(new SalesDto() { Mes = "Febrero", Ventas = 2750, Gastos = 850 });
-            salesData.Add(new SalesDto() { Mes = "Marzo", Ventas = 3185, Gastos = 643 });
-            salesData.Add(new SalesDto() { Mes = "Abril", Ventas = 3444, Gastos = 601 });
-
-            monthlyRevenue.DataSource = salesData;
-            monthlyRevenue.Binding = "Ventas";
-            monthlyRevenue.BindingX = "Mes";
-            monthlyRevenue.Refresh();
+            _listadoArticulosForm = new ListadoArticulos() { Dock = DockStyle.Fill };
+            _initialDashboardView = new InitialDashboardView() { Dock = DockStyle.Fill };
 
         }
 
@@ -37,6 +33,26 @@ namespace RoomBox___DataPortal
         {
             DialogResult confirm = MessageBox.Show("¿Desea salir de la aplicación?", "Esto cerrará su sesión y se perderán los cambios no guardados", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             this.DialogResult = confirm;
+        }
+
+        private void Dashboard_Load(object sender, EventArgs e)
+        {
+            SwapView(_initialDashboardView);
+        }
+        private void SwapView(UserControl view)
+        {
+            this.Controls.OfType<UserControl>().ToList().ForEach(x => this.Controls.Remove(x));
+            this.Controls.Add(view);
+        }
+
+        private void catalogoArticulosMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_listadoArticulosForm);
+        }
+
+        private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_initialDashboardView);
         }
     }
 }

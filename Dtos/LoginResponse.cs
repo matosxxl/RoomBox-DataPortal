@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoomBox___DataPortal.Dtos
 {
-    internal class LoginResponse
+    public class LoginResponse
     {
 
         public LoginResponse() { }
