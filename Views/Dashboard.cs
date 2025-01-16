@@ -20,13 +20,14 @@ namespace RoomBox___DataPortal
     {
         readonly ListadoArticulos _listadoArticulosForm;
         readonly InitialDashboardView _initialDashboardView;
+        readonly anadirusuario _anadirusuario;
         public Dashboard(LoginResponse loginInfo)
         {
             InitializeComponent();
 
             _listadoArticulosForm = new ListadoArticulos() { Dock = DockStyle.Fill };
             _initialDashboardView = new InitialDashboardView() { Dock = DockStyle.Fill };
-
+            _anadirusuario = new anadirusuario() { Dock = DockStyle.Fill };
         }
 
         private void salirMenuItem_Click(object sender, EventArgs e)
@@ -53,6 +54,11 @@ namespace RoomBox___DataPortal
         private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SwapView(_initialDashboardView);
+        }
+
+        private void usuariosAdministrativosMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_anadirusuario);
         }
     }
 }
