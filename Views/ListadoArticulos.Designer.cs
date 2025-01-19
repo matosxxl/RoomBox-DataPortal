@@ -140,6 +140,7 @@
             // nudStock
             // 
             nudStock.Location = new Point(1306, 401);
+            nudStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             nudStock.Name = "nudStock";
             nudStock.Size = new Size(180, 31);
             nudStock.TabIndex = 11;
@@ -149,9 +150,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(1306, 545);
             label6.Name = "label6";
-            label6.Size = new Size(184, 25);
+            label6.Size = new Size(168, 25);
             label6.TabIndex = 12;
-            label6.Text = "Imagen del producto:";
+            label6.Text = "Imagen del artículo:";
             // 
             // openFileDialog
             // 

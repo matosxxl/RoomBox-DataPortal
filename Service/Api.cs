@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,6 +77,88 @@ namespace RoomBox___DataPortal.Service
                 return null;
             }
         }
+
+        public async Task<Article> trySwitchStatusArticle(int articleId, bool newStatus)
+        {
+
+            using (MultipartFormDataContent formData = new MultipartFormDataContent())
+            {
+
+                formData.Add(new StringContent(newStatus.ToString()), "article_status");
+
+                try
+                {
+                    var res = await _httpClient.PatchAsync($"/api/articles/{articleId}/", formData);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        var resContent = await res.Content.ReadAsStringAsync();
+                        return Article.FromJson(resContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return null;
+
+                }
+
+            }
+        }
+
+        public async Task<Boolean> tryCreateArticle(Article article, string imagePath) 
+        { 
+            FileStream fs = null;
+
+            using (MultipartFormDataContent formData = new MultipartFormDataContent())
+            {
+
+                // Image handling
+                if (imagePath != null)
+                {
+                    fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+                    StreamContent fileContent = new StreamContent(fs);
+                    fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                    formData.Add(fileContent, "image", Path.GetFileName(imagePath));
+                }
+
+                if (article.ArticleName != null) formData.Add(new StringContent(article.ArticleName.ToString()!), "article_name");
+                formData.Add(new StringContent(article.ArticleStock.ToString()!), "article_stock");
+                if (article.ArticleUnitPrice != null) formData.Add(new StringContent(article.ArticleUnitPrice.ToString()!), "article_unit_price");
+                formData.Add(new StringContent(article.ArticleStatus.ToString()!), "article_status");
+                formData.Add(new StringContent("1"), "client");
+
+                try
+                {
+                    var res = await _httpClient.PostAsync($"/api/articles/", formData);
+                    if (res.StatusCode == HttpStatusCode.Created)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+
+                }
+                finally
+                {
+                    if (fs != null)
+                    {
+                        fs.Close();
+                        fs.Dispose();
+                    }
+                } // End of try catch
+
+            } // End of using
+
+        } // End of method
 
         public async Task<Article> tryUpdateArticle(Article article, string imagePath)
         {

@@ -68,6 +68,15 @@ namespace RoomBox___DataPortal.Views
             tbl_Articulos.Refresh();
         }
 
+        private bool isFormComplete()
+        {
+            bool condition = !(String.IsNullOrWhiteSpace(txtNombreArticulo.Text) ||
+                                String.IsNullOrWhiteSpace(txtUnitPrice.Text) ||
+                                String.IsNullOrWhiteSpace(txtDescripcion.Text) ||
+                                !checkUnitPrice());
+            return condition;
+        }
+
         private void tbl_Articulos_SelectionChanged(object sender, EventArgs e)
         {
             if (tbl_Articulos.SelectedRows.Count > 0)
@@ -119,6 +128,11 @@ namespace RoomBox___DataPortal.Views
         {
             tmpArticle = _currentArticle.Snapshot();
             Article updatedArticle = null;
+            if (!isFormComplete())
+            {
+                MessageBox.Show("Por favor complete todos los campos para actualizar el articulo", "Formulario Incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 tmpArticle.ArticleName = txtNombreArticulo.Text;
@@ -135,7 +149,11 @@ namespace RoomBox___DataPortal.Views
                 return;
             }
 
-            MessageBox.Show((JsonConvert.SerializeObject(tmpArticle) == JsonConvert.SerializeObject(_currentArticle)) ? "Son iguales, no se presentan cambios" : "Hay discrepancias");
+            if (JsonConvert.SerializeObject(tmpArticle) == JsonConvert.SerializeObject(_currentArticle.Snapshot()))
+            {
+                MessageBox.Show("No ha modificado ningun campo en el formulario, por favor haga algun cambio y vuelva a intentarlo", "Articulo no ha sido modificado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             Api http = Api.getInstance();
 
@@ -189,7 +207,7 @@ namespace RoomBox___DataPortal.Views
             Article tmpArticle = _currentArticle.Snapshot();
             tmpArticle.ArticleStatus = !tmpArticle.ArticleStatus;
             Api http = Api.getInstance();
-            tmpArticle = await http.tryUpdateArticle(tmpArticle, null);
+            tmpArticle = await http.trySwitchStatusArticle(tmpArticle.ArticleId, tmpArticle.ArticleStatus);
 
             if (tmpArticle != null && tmpArticle.ArticleStatus != _currentArticle.Snapshot().ArticleStatus)
             {
@@ -215,6 +233,24 @@ namespace RoomBox___DataPortal.Views
         {
             reloadArticles();
             refreshTable();
+        }
+
+        private bool checkUnitPrice()
+        {
+            try
+            {
+                var price = Convert.ToDecimal(txtUnitPrice.Text);
+                if (price < 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("El precio unitario debe ser un numero decimal positivo", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
     }
 }

@@ -52,6 +52,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(339, 12);
             pictureBox1.Name = "pictureBox1";
@@ -107,18 +108,20 @@
             // 
             // btnIniciarSesion
             // 
+            btnIniciarSesion.BackColor = SystemColors.ButtonHighlight;
             btnIniciarSesion.Location = new Point(343, 534);
             btnIniciarSesion.Name = "btnIniciarSesion";
             btnIniciarSesion.Size = new Size(193, 54);
             btnIniciarSesion.TabIndex = 7;
             btnIniciarSesion.Text = "Iniciar sesion";
-            btnIniciarSesion.UseVisualStyleBackColor = true;
+            btnIniciarSesion.UseVisualStyleBackColor = false;
             btnIniciarSesion.Click += btnIniciarSesion_Click;
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(917, 640);
             Controls.Add(btnIniciarSesion);
             Controls.Add(label4);
