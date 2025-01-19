@@ -30,19 +30,22 @@
         {
             tbl_Articulos = new DataGridView();
             label1 = new Label();
-            this.txtNombreArticulo = new TextBox();
-            this.txtDescripcion = new TextBox();
+            txtNombreArticulo = new TextBox();
+            txtDescripcion = new TextBox();
             txtUnitPrice = new TextBox();
-            pictureBox1 = new PictureBox();
+            pbImagenArticulo = new PictureBox();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
             nudStock = new NumericUpDown();
             label6 = new Label();
-            openFileDialog1 = new OpenFileDialog();
+            openFileDialog = new OpenFileDialog();
+            btnActualizarArticulo = new Button();
+            btnSwitchEstado = new Button();
+            btnAdjuntarFoto = new Button();
             ((System.ComponentModel.ISupportInitialize)tbl_Articulos).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbImagenArticulo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudStock).BeginInit();
             SuspendLayout();
             // 
@@ -52,52 +55,56 @@
             tbl_Articulos.Location = new Point(34, 90);
             tbl_Articulos.Name = "tbl_Articulos";
             tbl_Articulos.RowHeadersWidth = 62;
-            tbl_Articulos.Size = new Size(858, 535);
+            tbl_Articulos.Size = new Size(1221, 823);
             tbl_Articulos.TabIndex = 0;
+            tbl_Articulos.SelectionChanged += tbl_Articulos_SelectionChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(34, 26);
+            label1.Location = new Point(34, 40);
             label1.Name = "label1";
-            label1.Size = new Size(406, 38);
+            label1.Size = new Size(276, 38);
             label1.TabIndex = 1;
-            label1.Text = "Listado de articulos registrados:";
+            label1.Text = "Artículos registrados:";
             // 
             // txtNombreArticulo
             // 
-            this.txtNombreArticulo.Location = new Point(943, 118);
-            this.txtNombreArticulo.Name = "txtNombreArticulo";
-            this.txtNombreArticulo.Size = new Size(299, 31);
-            this.txtNombreArticulo.TabIndex = 2;
+            txtNombreArticulo.Location = new Point(1306, 114);
+            txtNombreArticulo.Name = "txtNombreArticulo";
+            txtNombreArticulo.Size = new Size(299, 31);
+            txtNombreArticulo.TabIndex = 2;
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new Point(943, 195);
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new Size(299, 31);
-            this.txtDescripcion.TabIndex = 3;
+            txtDescripcion.Location = new Point(1306, 191);
+            txtDescripcion.Multiline = true;
+            txtDescripcion.Name = "txtDescripcion";
+            txtDescripcion.Size = new Size(299, 160);
+            txtDescripcion.TabIndex = 3;
             // 
             // txtUnitPrice
             // 
-            txtUnitPrice.Location = new Point(943, 364);
+            txtUnitPrice.Location = new Point(1306, 476);
             txtUnitPrice.Name = "txtUnitPrice";
             txtUnitPrice.Size = new Size(299, 31);
             txtUnitPrice.TabIndex = 5;
             // 
-            // pictureBox1
+            // pbImagenArticulo
             // 
-            pictureBox1.Location = new Point(943, 471);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(180, 154);
-            pictureBox1.TabIndex = 6;
-            pictureBox1.TabStop = false;
+            pbImagenArticulo.Location = new Point(1306, 583);
+            pbImagenArticulo.Name = "pbImagenArticulo";
+            pbImagenArticulo.Size = new Size(299, 254);
+            pbImagenArticulo.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbImagenArticulo.TabIndex = 6;
+            pbImagenArticulo.TabStop = false;
+            pbImagenArticulo.LocationChanged += pbImagenArticulo_LocationChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(943, 90);
+            label2.Location = new Point(1306, 86);
             label2.Name = "label2";
             label2.Size = new Size(174, 25);
             label2.TabIndex = 7;
@@ -106,7 +113,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(943, 167);
+            label3.Location = new Point(1306, 163);
             label3.Name = "label3";
             label3.Size = new Size(200, 25);
             label3.TabIndex = 8;
@@ -115,7 +122,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(943, 252);
+            label4.Location = new Point(1306, 364);
             label4.Name = "label4";
             label4.Size = new Size(191, 25);
             label4.TabIndex = 9;
@@ -124,7 +131,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(943, 336);
+            label5.Location = new Point(1306, 448);
             label5.Name = "label5";
             label5.Size = new Size(129, 25);
             label5.TabIndex = 10;
@@ -132,7 +139,7 @@
             // 
             // nudStock
             // 
-            nudStock.Location = new Point(943, 289);
+            nudStock.Location = new Point(1306, 401);
             nudStock.Name = "nudStock";
             nudStock.Size = new Size(180, 31);
             nudStock.TabIndex = 11;
@@ -140,37 +147,76 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(943, 433);
+            label6.Location = new Point(1306, 545);
             label6.Name = "label6";
             label6.Size = new Size(184, 25);
             label6.TabIndex = 12;
             label6.Text = "Imagen del producto:";
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog.FileName = "openFileDialog1";
+            // 
+            // btnActualizarArticulo
+            // 
+            btnActualizarArticulo.BackColor = Color.Lime;
+            btnActualizarArticulo.Location = new Point(1306, 856);
+            btnActualizarArticulo.Name = "btnActualizarArticulo";
+            btnActualizarArticulo.Size = new Size(299, 57);
+            btnActualizarArticulo.TabIndex = 13;
+            btnActualizarArticulo.Text = "Actualizar artículo";
+            btnActualizarArticulo.UseVisualStyleBackColor = false;
+            btnActualizarArticulo.Click += btnActualizarArticulo_Click;
+            // 
+            // btnSwitchEstado
+            // 
+            btnSwitchEstado.BackColor = Color.FromArgb(255, 128, 128);
+            btnSwitchEstado.ForeColor = SystemColors.ActiveCaptionText;
+            btnSwitchEstado.Location = new Point(1631, 840);
+            btnSwitchEstado.Name = "btnSwitchEstado";
+            btnSwitchEstado.Size = new Size(148, 73);
+            btnSwitchEstado.TabIndex = 14;
+            btnSwitchEstado.Text = "Habilitar / Deshabilitar";
+            btnSwitchEstado.UseVisualStyleBackColor = false;
+            btnSwitchEstado.Click += btnSwitchEstado_Click;
+            // 
+            // btnAdjuntarFoto
+            // 
+            btnAdjuntarFoto.BackColor = SystemColors.ActiveCaption;
+            btnAdjuntarFoto.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAdjuntarFoto.Location = new Point(1631, 583);
+            btnAdjuntarFoto.Name = "btnAdjuntarFoto";
+            btnAdjuntarFoto.Size = new Size(148, 53);
+            btnAdjuntarFoto.TabIndex = 15;
+            btnAdjuntarFoto.Text = "Modificar imagen";
+            btnAdjuntarFoto.UseVisualStyleBackColor = false;
+            btnAdjuntarFoto.Click += btnAdjuntarFoto_Click;
             // 
             // ListadoArticulos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnAdjuntarFoto);
+            Controls.Add(btnSwitchEstado);
+            Controls.Add(btnActualizarArticulo);
             Controls.Add(label6);
             Controls.Add(nudStock);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(pictureBox1);
+            Controls.Add(pbImagenArticulo);
             Controls.Add(txtUnitPrice);
-            Controls.Add(this.txtDescripcion);
-            Controls.Add(this.txtNombreArticulo);
+            Controls.Add(txtDescripcion);
+            Controls.Add(txtNombreArticulo);
             Controls.Add(label1);
             Controls.Add(tbl_Articulos);
             Name = "ListadoArticulos";
-            Size = new Size(1320, 679);
+            Size = new Size(1811, 959);
             Load += ListadoArticulos_Load;
+            Enter += ListadoArticulos_Enter;
             ((System.ComponentModel.ISupportInitialize)tbl_Articulos).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbImagenArticulo).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudStock).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -184,13 +230,16 @@
         private TextBox txtDescripcion;
         private TextBox textBox3;
         private TextBox txtUnitPrice;
-        private PictureBox pictureBox1;
+        private PictureBox pbImagenArticulo;
         private Label label2;
         private Label label3;
         private Label label4;
         private Label label5;
         private NumericUpDown nudStock;
         private Label label6;
-        private OpenFileDialog openFileDialog1;
+        private OpenFileDialog openFileDialog;
+        private Button btnActualizarArticulo;
+        private Button btnSwitchEstado;
+        private Button btnAdjuntarFoto;
     }
 }

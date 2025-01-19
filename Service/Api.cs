@@ -50,6 +50,7 @@ namespace RoomBox___DataPortal.Service
                 LoginResponse resInfo = JsonConvert.DeserializeObject<LoginResponse>(resContent);
                 _accessToken = resInfo.access;
                 _refreshToken = resInfo.refresh;
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
                 return resInfo;
             }
             catch (Exception ex)
@@ -61,7 +62,6 @@ namespace RoomBox___DataPortal.Service
         public async Task<ArticlesResponse> tryGetArticles()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "/api/articles/");
-            request.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
             try
             {
@@ -75,5 +75,58 @@ namespace RoomBox___DataPortal.Service
                 return null;
             }
         }
+
+        public async Task<Article> tryUpdateArticle(Article article, string imagePath)
+        {
+            FileStream fs = null;
+
+            using (MultipartFormDataContent formData = new MultipartFormDataContent())
+            {
+
+                // Image handling
+                if (imagePath != null)
+                {
+                    fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+                    StreamContent fileContent = new StreamContent(fs);
+                    fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                    formData.Add(fileContent, "image", Path.GetFileName(imagePath));
+                }
+
+                if (article.Client != null) formData.Add(new StringContent(article.Client.ToString()!), "client");
+                if (article.ArticleName != null) formData.Add(new StringContent(article.ArticleName.ToString()!), "article_name");
+                formData.Add(new StringContent(article.ArticleStock.ToString()!), "article_stock");
+                if (article.ArticleUnitPrice != null) formData.Add(new StringContent(article.ArticleUnitPrice.ToString()!), "article_unit_price");
+                formData.Add(new StringContent(article.ArticleStatus.ToString()!), "article_status");
+                formData.Add(new StringContent(article.ArticleId.ToString()!), "article_id");
+
+                try
+                {
+                    var res = await _httpClient.PatchAsync($"/api/articles/{article.ArticleId}/", formData);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        var resContent = await res.Content.ReadAsStringAsync();
+                        return Article.FromJson(resContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return null;
+
+                } finally
+                {
+                    if (fs != null)
+                    {
+                        fs.Close();
+                        fs.Dispose();
+                    }
+                } // End of try catch
+
+            } // End of using
+
+        } // End of method
     }
 }
