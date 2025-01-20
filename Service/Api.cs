@@ -230,5 +230,24 @@ namespace RoomBox___DataPortal.Service
             } // End of using
 
         } // End of method
+
+        public async Task<GetUsuarios> tryGetStaff()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/staff/");
+
+            try
+            {
+                var res = await _httpClient.SendAsync(request);
+                res.EnsureSuccessStatusCode();
+                var resContent = await res.Content.ReadAsStringAsync();
+                return GetUsuarios.FromJson(resContent);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+
     }
 }
