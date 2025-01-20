@@ -108,6 +108,7 @@
             // 
             // usuariosAdministrativosMenuItem
             // 
+            usuariosAdministrativosMenuItem.Enabled = false;
             usuariosAdministrativosMenuItem.Name = "usuariosAdministrativosMenuItem";
             usuariosAdministrativosMenuItem.Size = new Size(311, 34);
             usuariosAdministrativosMenuItem.Text = "Usuarios Administrativos";

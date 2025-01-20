@@ -3,6 +3,7 @@ using RoomBox___DataPortal.Dtos;
 using RoomBox___DataPortal.Dtos.ArticleFrequency;
 using RoomBox___DataPortal.Dtos.GetUsuarios;
 using RoomBox___DataPortal.Dtos.MonthlySales;
+using RoomBox___DataPortal.Dtos.Staff;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -73,6 +74,24 @@ namespace RoomBox___DataPortal.Service
         public async Task<ArticlesResponse> tryGetArticles(int page)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/api/articles/?page={page}");
+            request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+
+            try
+            {
+                var res = await _httpClient.SendAsync(request);
+                res.EnsureSuccessStatusCode();
+                var resContent = await res.Content.ReadAsStringAsync();
+                return ArticlesResponse.FromJson(resContent);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<ArticlesResponse> tryGetAdminUsers(int page)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/staff/?page={page}");
             request.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
             try
@@ -276,9 +295,9 @@ namespace RoomBox___DataPortal.Service
 
         } // End of method
 
-        public async Task<GetUsuarios> tryGetStaff()
+        public async Task<StaffResponse> tryGetStaff(int page)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/staff/");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/staff/?page={page}");
             request.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
             try
@@ -286,7 +305,7 @@ namespace RoomBox___DataPortal.Service
                 var res = await _httpClient.SendAsync(request);
                 res.EnsureSuccessStatusCode();
                 var resContent = await res.Content.ReadAsStringAsync();
-                return GetUsuarios.FromJson(resContent);
+                return StaffResponse.FromJson(resContent);
             }
             catch (Exception e)
             {
