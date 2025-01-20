@@ -100,7 +100,7 @@ namespace RoomBox___DataPortal.Views
 
             if (!isFormComplete())
             {
-                MessageBox.Show("Por favor complete todos los campos para actualizar el articulo", "Formulario Incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor complete todos los campos para registrar el articulo", "Formulario Incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

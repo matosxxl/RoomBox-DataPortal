@@ -31,21 +31,23 @@
             label1 = new Label();
             label8 = new Label();
             tbl_Perfiles = new DataGridView();
-            button2 = new Button();
-            txtcorreo = new TextBox();
+            btnCambiarEstado = new Button();
+            txtCorreo = new TextBox();
             label9 = new Label();
-            button1 = new Button();
-            btnIniciarSesion = new Button();
+            btnModificar = new Button();
+            btnRegistrar = new Button();
             label6 = new Label();
-            txttelefonos = new TextBox();
+            txtTelefono = new TextBox();
             label5 = new Label();
-            txtdireccion = new TextBox();
+            txtDireccion = new TextBox();
             label4 = new Label();
-            txtcedula = new TextBox();
+            txtCedula = new TextBox();
             label3 = new Label();
-            txtapellidos = new TextBox();
+            txtApellido = new TextBox();
             label2 = new Label();
-            txtUsername = new TextBox();
+            txtNombre = new TextBox();
+            label7 = new Label();
+            txtEmployeeNo = new TextBox();
             ((System.ComponentModel.ISupportInitialize)tbl_Perfiles).BeginInit();
             SuspendLayout();
             // 
@@ -79,24 +81,26 @@
             tbl_Perfiles.RowHeadersWidth = 62;
             tbl_Perfiles.Size = new Size(897, 700);
             tbl_Perfiles.TabIndex = 24;
+            tbl_Perfiles.SelectionChanged += tbl_Perfiles_SelectionChanged;
             // 
-            // button2
+            // btnCambiarEstado
             // 
-            button2.BackColor = Color.Red;
-            button2.ForeColor = SystemColors.ControlLightLight;
-            button2.Location = new Point(987, 772);
-            button2.Name = "button2";
-            button2.Size = new Size(193, 53);
-            button2.TabIndex = 41;
-            button2.Text = "Eliminar Perfil";
-            button2.UseVisualStyleBackColor = false;
+            btnCambiarEstado.BackColor = Color.IndianRed;
+            btnCambiarEstado.ForeColor = SystemColors.Desktop;
+            btnCambiarEstado.Location = new Point(1267, 793);
+            btnCambiarEstado.Name = "btnCambiarEstado";
+            btnCambiarEstado.Size = new Size(250, 63);
+            btnCambiarEstado.TabIndex = 41;
+            btnCambiarEstado.Text = "Habilitar / Deshabilitar";
+            btnCambiarEstado.UseVisualStyleBackColor = false;
+            btnCambiarEstado.Click += btnCambiarEstado_Click;
             // 
-            // txtcorreo
+            // txtCorreo
             // 
-            txtcorreo.Location = new Point(986, 600);
-            txtcorreo.Name = "txtcorreo";
-            txtcorreo.Size = new Size(530, 31);
-            txtcorreo.TabIndex = 40;
+            txtCorreo.Location = new Point(986, 600);
+            txtCorreo.Name = "txtCorreo";
+            txtCorreo.Size = new Size(530, 31);
+            txtCorreo.TabIndex = 40;
             // 
             // label9
             // 
@@ -107,25 +111,27 @@
             label9.TabIndex = 39;
             label9.Text = "Correo:";
             // 
-            // button1
+            // btnModificar
             // 
-            button1.BackColor = SystemColors.ActiveCaption;
-            button1.Location = new Point(1217, 662);
-            button1.Name = "button1";
-            button1.Size = new Size(193, 53);
-            button1.TabIndex = 38;
-            button1.Text = "Modificar Perfil";
-            button1.UseVisualStyleBackColor = false;
+            btnModificar.BackColor = SystemColors.ActiveCaption;
+            btnModificar.Location = new Point(988, 793);
+            btnModificar.Name = "btnModificar";
+            btnModificar.Size = new Size(250, 63);
+            btnModificar.TabIndex = 38;
+            btnModificar.Text = "Modificar Perfil";
+            btnModificar.UseVisualStyleBackColor = false;
+            btnModificar.Click += btnModificar_Click;
             // 
-            // btnIniciarSesion
+            // btnRegistrar
             // 
-            btnIniciarSesion.BackColor = Color.FromArgb(128, 255, 128);
-            btnIniciarSesion.Location = new Point(986, 662);
-            btnIniciarSesion.Name = "btnIniciarSesion";
-            btnIniciarSesion.Size = new Size(193, 53);
-            btnIniciarSesion.TabIndex = 37;
-            btnIniciarSesion.Text = "Registrar Perfil";
-            btnIniciarSesion.UseVisualStyleBackColor = false;
+            btnRegistrar.BackColor = Color.FromArgb(128, 255, 128);
+            btnRegistrar.Location = new Point(986, 670);
+            btnRegistrar.Name = "btnRegistrar";
+            btnRegistrar.Size = new Size(530, 62);
+            btnRegistrar.TabIndex = 37;
+            btnRegistrar.Text = "Registrar Perfil";
+            btnRegistrar.UseVisualStyleBackColor = false;
+            btnRegistrar.Click += btnRegistrar_Click;
             // 
             // label6
             // 
@@ -136,28 +142,28 @@
             label6.TabIndex = 36;
             label6.Text = "Telefono:";
             // 
-            // txttelefonos
+            // txtTelefono
             // 
-            txttelefonos.Location = new Point(1267, 413);
-            txttelefonos.Name = "txttelefonos";
-            txttelefonos.Size = new Size(250, 31);
-            txttelefonos.TabIndex = 35;
+            txtTelefono.Location = new Point(1267, 413);
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Size = new Size(250, 31);
+            txtTelefono.TabIndex = 35;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(986, 487);
+            label5.Location = new Point(986, 478);
             label5.Name = "label5";
             label5.Size = new Size(89, 25);
             label5.TabIndex = 34;
             label5.Text = "Direccion:";
             // 
-            // txtdireccion
+            // txtDireccion
             // 
-            txtdireccion.Location = new Point(986, 515);
-            txtdireccion.Name = "txtdireccion";
-            txtdireccion.Size = new Size(530, 31);
-            txtdireccion.TabIndex = 33;
+            txtDireccion.Location = new Point(986, 515);
+            txtDireccion.Name = "txtDireccion";
+            txtDireccion.Size = new Size(530, 31);
+            txtDireccion.TabIndex = 33;
             // 
             // label4
             // 
@@ -168,28 +174,28 @@
             label4.TabIndex = 32;
             label4.Text = "Cedula:";
             // 
-            // txtcedula
+            // txtCedula
             // 
-            txtcedula.Location = new Point(987, 413);
-            txtcedula.Name = "txtcedula";
-            txtcedula.Size = new Size(250, 31);
-            txtcedula.TabIndex = 31;
+            txtCedula.Location = new Point(987, 413);
+            txtCedula.Name = "txtCedula";
+            txtCedula.Size = new Size(250, 31);
+            txtCedula.TabIndex = 31;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(987, 295);
+            label3.Location = new Point(1260, 190);
             label3.Name = "label3";
             label3.Size = new Size(90, 25);
             label3.TabIndex = 30;
             label3.Text = "Apellidos:";
             // 
-            // txtapellidos
+            // txtApellido
             // 
-            txtapellidos.Location = new Point(987, 323);
-            txtapellidos.Name = "txtapellidos";
-            txtapellidos.Size = new Size(530, 31);
-            txtapellidos.TabIndex = 29;
+            txtApellido.Location = new Point(1260, 218);
+            txtApellido.Name = "txtApellido";
+            txtApellido.Size = new Size(257, 31);
+            txtApellido.TabIndex = 29;
             // 
             // label2
             // 
@@ -200,32 +206,50 @@
             label2.TabIndex = 28;
             label2.Text = "Nombre(s):";
             // 
-            // txtUsername
+            // txtNombre
             // 
-            txtUsername.Location = new Point(987, 218);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(530, 31);
-            txtUsername.TabIndex = 27;
+            txtNombre.Location = new Point(987, 218);
+            txtNombre.Name = "txtNombre";
+            txtNombre.Size = new Size(250, 31);
+            txtNombre.TabIndex = 27;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(988, 281);
+            label7.Name = "label7";
+            label7.Size = new Size(185, 25);
+            label7.TabIndex = 43;
+            label7.Text = "Codigo de empleado:";
+            // 
+            // txtEmployeeNo
+            // 
+            txtEmployeeNo.Location = new Point(988, 318);
+            txtEmployeeNo.Name = "txtEmployeeNo";
+            txtEmployeeNo.Size = new Size(530, 31);
+            txtEmployeeNo.TabIndex = 42;
             // 
             // anadirpersonal
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(button2);
-            Controls.Add(txtcorreo);
+            Controls.Add(label7);
+            Controls.Add(txtEmployeeNo);
+            Controls.Add(btnCambiarEstado);
+            Controls.Add(txtCorreo);
             Controls.Add(label9);
-            Controls.Add(button1);
-            Controls.Add(btnIniciarSesion);
+            Controls.Add(btnModificar);
+            Controls.Add(btnRegistrar);
             Controls.Add(label6);
-            Controls.Add(txttelefonos);
+            Controls.Add(txtTelefono);
             Controls.Add(label5);
-            Controls.Add(txtdireccion);
+            Controls.Add(txtDireccion);
             Controls.Add(label4);
-            Controls.Add(txtcedula);
+            Controls.Add(txtCedula);
             Controls.Add(label3);
-            Controls.Add(txtapellidos);
+            Controls.Add(txtApellido);
             Controls.Add(label2);
-            Controls.Add(txtUsername);
+            Controls.Add(txtNombre);
             Controls.Add(tbl_Perfiles);
             Controls.Add(label8);
             Controls.Add(label1);
@@ -233,6 +257,7 @@
             Name = "anadirpersonal";
             Size = new Size(1657, 1045);
             Load += anadirpersonal_Load;
+            Enter += anadirpersonal_Enter;
             ((System.ComponentModel.ISupportInitialize)tbl_Perfiles).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -243,20 +268,22 @@
         private Label label1;
         private Label label8;
         private DataGridView tbl_Perfiles;
-        private Button button2;
-        private TextBox txtcorreo;
+        private Button btnCambiarEstado;
+        private TextBox txtCorreo;
         private Label label9;
-        private Button button1;
-        private Button btnIniciarSesion;
+        private Button btnModificar;
+        private Button btnRegistrar;
         private Label label6;
-        private TextBox txttelefonos;
+        private TextBox txtTelefono;
         private Label label5;
-        private TextBox txtdireccion;
+        private TextBox txtDireccion;
         private Label label4;
-        private TextBox txtcedula;
+        private TextBox txtCedula;
         private Label label3;
-        private TextBox txtapellidos;
+        private TextBox txtApellido;
         private Label label2;
-        private TextBox txtUsername;
+        private TextBox txtNombre;
+        private Label label7;
+        private TextBox txtEmployeeNo;
     }
 }

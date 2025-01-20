@@ -14,10 +14,10 @@ namespace RoomBox___DataPortal.Dtos.Staff
         public long Count { get; set; }
 
         [JsonProperty("next")]
-        public object Next { get; set; }
+        public object? Next { get; set; }
 
         [JsonProperty("previous")]
-        public object Previous { get; set; }
+        public object? Previous { get; set; }
 
         [JsonProperty("results")]
         public List<Staff> Results { get; set; }
@@ -26,7 +26,7 @@ namespace RoomBox___DataPortal.Dtos.Staff
     public partial class Staff
     {
         [JsonProperty("staff_id")]
-        public long StaffId { get; set; }
+        public int StaffId { get; set; }
 
         [JsonProperty("staff_employee_no")]
         public string StaffEmployeeNo { get; set; }
@@ -59,7 +59,25 @@ namespace RoomBox___DataPortal.Dtos.Staff
         public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonProperty("user")]
-        public long User { get; set; }
+        public long? User { get; set; }
+
+        public Staff Snapshot()
+        {
+            // Serialize and deserialize to create a deep copy
+            var json = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<Staff>(json)!;
+        }
+    }
+
+    public static class SerializeStaff
+    {
+        public static string ToJson(Staff article) => JsonConvert.SerializeObject(article, RoomBox___DataPortal.Dtos.Converter.Settings);
+
+    }
+
+    public partial class Staff
+    {
+        public static Staff FromJson(string json) => JsonConvert.DeserializeObject<Staff>(json, RoomBox___DataPortal.Dtos.Converter.Settings);
     }
 
     public partial class StaffResponse

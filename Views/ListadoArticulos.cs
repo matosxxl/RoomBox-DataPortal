@@ -197,7 +197,7 @@ namespace RoomBox___DataPortal.Views
             if (updatedArticle != null)
             {
                 MessageBox.Show($"Se ha modificado el artículo '{updatedArticle.ArticleName}' con exito! ID:{updatedArticle.ArticleId}", "Modificacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                reloadArticles();
+               _articles = await reloadArticles();
                 refreshTable();
             }
             else
@@ -238,7 +238,7 @@ namespace RoomBox___DataPortal.Views
 
             if (tmpArticle != null && tmpArticle.ArticleStatus != _currentArticle.Snapshot().ArticleStatus)
             {
-                reloadArticles();
+                _articles = await reloadArticles();
                 if (tmpArticle.ArticleStatus)
                 {
                     MessageBox.Show("Se ha habilitado el articulo con exito", "Habilitacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);

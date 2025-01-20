@@ -114,11 +114,14 @@ namespace RoomBox___DataPortal.Service
             {
 
                 formData.Add(new StringContent(newStatus.ToString()), "article_status");
-                formData.Headers.Add("Authorization", $"Bearer {_accessToken}");
+
+                var request = new HttpRequestMessage(HttpMethod.Patch, $"/api/articles/{articleId}/");
+                request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                request.Content = formData;
 
                 try
                 {
-                    var res = await _httpClient.PatchAsync($"/api/articles/{articleId}/", formData);
+                    var res = await _httpClient.SendAsync(request);
                     if (res.IsSuccessStatusCode)
                     {
                         var resContent = await res.Content.ReadAsStringAsync();
@@ -160,12 +163,15 @@ namespace RoomBox___DataPortal.Service
                 if (article.ArticleType != null) formData.Add(new StringContent(article.ArticleType.ToString()!), "article_type");
                 if (article.ArticleUnitPrice != null) formData.Add(new StringContent(article.ArticleUnitPrice.ToString()!), "article_unit_price");
                 formData.Add(new StringContent(article.ArticleStatus.ToString()!), "article_status");
-                formData.Add(new StringContent("1"), "client");
-                formData.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                //formData.Add(new StringContent("1"), "client");
+
+                var request = new HttpRequestMessage(HttpMethod.Post, "/api/articles/");
+                request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                request.Content = formData;
 
                 try
                 {
-                    var res = await _httpClient.PostAsync($"/api/articles/", formData);
+                    var res = await _httpClient.SendAsync(request);
                     if (res.StatusCode == HttpStatusCode.Created)
                     {
                         return true;
@@ -263,11 +269,15 @@ namespace RoomBox___DataPortal.Service
                 if (article.ArticleUnitPrice != null) formData.Add(new StringContent(article.ArticleUnitPrice.ToString()!), "article_unit_price");
                 formData.Add(new StringContent(article.ArticleStatus.ToString()!), "article_status");
                 formData.Add(new StringContent(article.ArticleId.ToString()!), "article_id");
-                formData.Headers.Add("Authorization", $"Bearer {_accessToken}");
+
+
+                var request = new HttpRequestMessage(HttpMethod.Patch, $"/api/articles/{article.ArticleId}/");
+                request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                request.Content = formData;
 
                 try
                 {
-                    var res = await _httpClient.PatchAsync($"/api/articles/{article.ArticleId}/", formData);
+                    var res = await _httpClient.SendAsync(request);
                     if (res.IsSuccessStatusCode)
                     {
                         var resContent = await res.Content.ReadAsStringAsync();
@@ -313,6 +323,122 @@ namespace RoomBox___DataPortal.Service
             }
         }
 
+        public async Task<Boolean> tryCreateStaff(Staff staffToCreate)
+        {
+
+            using (MultipartFormDataContent formData = new MultipartFormDataContent())
+            {
+                formData.Add(new StringContent(staffToCreate.StaffName.ToString()!), "staff_name");
+                formData.Add(new StringContent(staffToCreate.StaffLastName.ToString()!), "staff_last_name");
+                formData.Add(new StringContent(staffToCreate.StaffEmployeeNo.ToString()!), "staff_employee_no");
+                formData.Add(new StringContent(staffToCreate.StaffIdentification.ToString()!), "staff_identification");
+                formData.Add(new StringContent(staffToCreate.StaffDoctype.ToString()!), "staff_doctype");
+                formData.Add(new StringContent(staffToCreate.StaffAddress.ToString()!), "staff_address");
+                formData.Add(new StringContent(staffToCreate.StaffPhone.ToString()!), "staff_phone");
+                formData.Add(new StringContent(staffToCreate.StaffEmail.ToString()!), "staff_email");
+                formData.Add(new StringContent(staffToCreate.StaffStatus.ToString()!), "staff_status");
+                //formData.Add(new StringContent("1"), "client");
+
+                var request = new HttpRequestMessage(HttpMethod.Post, "/api/staff/");
+                request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                request.Content = formData;
+
+                try
+                {
+                    var res = await _httpClient.SendAsync(request);
+                    if (res.StatusCode == HttpStatusCode.Created)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+
+                }
+            }
+
+        }
+
+        public async Task<Staff> trySwitchStatusStaff(int staffId, bool newStatus)
+        {
+
+            using (MultipartFormDataContent formData = new MultipartFormDataContent())
+            {
+
+                formData.Add(new StringContent(newStatus.ToString()), "staff_status");
+
+                var request = new HttpRequestMessage(HttpMethod.Patch, $"/api/staff/{staffId}/");
+                request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                request.Content = formData;
+
+                try
+                {
+                    var res = await _httpClient.SendAsync(request);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        var resContent = await res.Content.ReadAsStringAsync();
+                        return Staff.FromJson(resContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return null;
+
+                }
+
+            }
+        }
+
+        public async Task<Staff> tryUpdateStaff(Staff staff)
+        {
+            using (MultipartFormDataContent formData = new MultipartFormDataContent())
+            {
+                formData.Add(new StringContent(staff.StaffName.ToString()!), "staff_name");
+                formData.Add(new StringContent(staff.StaffLastName.ToString()!), "staff_last_name");
+                formData.Add(new StringContent(staff.StaffEmployeeNo.ToString()!), "staff_employee_no");
+                formData.Add(new StringContent(staff.StaffIdentification.ToString()!), "staff_identification");
+                formData.Add(new StringContent(staff.StaffDoctype.ToString()!), "staff_doctype");
+                formData.Add(new StringContent(staff.StaffAddress.ToString()!), "staff_address");
+                formData.Add(new StringContent(staff.StaffPhone.ToString()!), "staff_phone");
+                formData.Add(new StringContent(staff.StaffEmail.ToString()!), "staff_email");
+                formData.Add(new StringContent(staff.StaffStatus.ToString()!), "staff_status");
+
+
+                var request = new HttpRequestMessage(HttpMethod.Patch, $"/api/staff/{staff.StaffId}/");
+                request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                request.Content = formData;
+
+                try
+                {
+                    var res = await _httpClient.SendAsync(request);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        var resContent = await res.Content.ReadAsStringAsync();
+                        return Staff.FromJson(resContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return null;
+
+                } // End of try catch
+
+            } // End of using
+
+        } // End of method
 
     }
 }
