@@ -79,8 +79,8 @@
             // 
             productosMenuItem.DropDownItems.AddRange(new ToolStripItem[] { rendimientoAnualMenuItem, rendimientoMensualMenuItem, rendimientoSemanalMenuItem, rendimientoHistoricoMenuItem });
             productosMenuItem.Name = "productosMenuItem";
-            productosMenuItem.Size = new Size(195, 34);
-            productosMenuItem.Text = "Productos";
+            productosMenuItem.Size = new Size(270, 34);
+            productosMenuItem.Text = "Artículos";
             // 
             // rendimientoAnualMenuItem
             // 
@@ -157,13 +157,13 @@
             // actualizarDatosMenuItem
             // 
             actualizarDatosMenuItem.Name = "actualizarDatosMenuItem";
-            actualizarDatosMenuItem.Size = new Size(270, 34);
+            actualizarDatosMenuItem.Size = new Size(242, 34);
             actualizarDatosMenuItem.Text = "Actualizar Datos";
             // 
             // cerrarSesionMenuItem
             // 
             cerrarSesionMenuItem.Name = "cerrarSesionMenuItem";
-            cerrarSesionMenuItem.Size = new Size(270, 34);
+            cerrarSesionMenuItem.Size = new Size(242, 34);
             cerrarSesionMenuItem.Text = "Cerrar Sesión";
             // 
             // aplicacionMenuItem
@@ -196,6 +196,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Dashboard";
             Text = "Dashboard";
+            WindowState = FormWindowState.Maximized;
             Load += Dashboard_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
