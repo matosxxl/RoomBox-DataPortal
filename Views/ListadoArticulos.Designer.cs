@@ -52,10 +52,11 @@
             // tbl_Articulos
             // 
             tbl_Articulos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tbl_Articulos.Location = new Point(34, 90);
+            tbl_Articulos.Location = new Point(24, 54);
+            tbl_Articulos.Margin = new Padding(2, 2, 2, 2);
             tbl_Articulos.Name = "tbl_Articulos";
             tbl_Articulos.RowHeadersWidth = 62;
-            tbl_Articulos.Size = new Size(1221, 823);
+            tbl_Articulos.Size = new Size(855, 494);
             tbl_Articulos.TabIndex = 0;
             tbl_Articulos.SelectionChanged += tbl_Articulos_SelectionChanged;
             // 
@@ -63,39 +64,44 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(34, 40);
+            label1.Location = new Point(24, 24);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(276, 38);
+            label1.Size = new Size(189, 25);
             label1.TabIndex = 1;
             label1.Text = "Artículos registrados:";
             // 
             // txtNombreArticulo
             // 
-            txtNombreArticulo.Location = new Point(1306, 114);
+            txtNombreArticulo.Location = new Point(914, 68);
+            txtNombreArticulo.Margin = new Padding(2, 2, 2, 2);
             txtNombreArticulo.Name = "txtNombreArticulo";
-            txtNombreArticulo.Size = new Size(299, 31);
+            txtNombreArticulo.Size = new Size(210, 23);
             txtNombreArticulo.TabIndex = 2;
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(1306, 191);
+            txtDescripcion.Location = new Point(914, 115);
+            txtDescripcion.Margin = new Padding(2, 2, 2, 2);
             txtDescripcion.Multiline = true;
             txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.Size = new Size(299, 160);
+            txtDescripcion.Size = new Size(210, 98);
             txtDescripcion.TabIndex = 3;
             // 
             // txtUnitPrice
             // 
-            txtUnitPrice.Location = new Point(1306, 476);
+            txtUnitPrice.Location = new Point(914, 286);
+            txtUnitPrice.Margin = new Padding(2, 2, 2, 2);
             txtUnitPrice.Name = "txtUnitPrice";
-            txtUnitPrice.Size = new Size(299, 31);
+            txtUnitPrice.Size = new Size(210, 23);
             txtUnitPrice.TabIndex = 5;
             // 
             // pbImagenArticulo
             // 
-            pbImagenArticulo.Location = new Point(1306, 583);
+            pbImagenArticulo.Location = new Point(914, 350);
+            pbImagenArticulo.Margin = new Padding(2, 2, 2, 2);
             pbImagenArticulo.Name = "pbImagenArticulo";
-            pbImagenArticulo.Size = new Size(299, 254);
+            pbImagenArticulo.Size = new Size(209, 152);
             pbImagenArticulo.SizeMode = PictureBoxSizeMode.StretchImage;
             pbImagenArticulo.TabIndex = 6;
             pbImagenArticulo.TabStop = false;
@@ -104,53 +110,59 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(1306, 86);
+            label2.Location = new Point(914, 52);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(174, 25);
+            label2.Size = new Size(116, 15);
             label2.TabIndex = 7;
             label2.Text = "Nombre del artículo:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(1306, 163);
+            label3.Location = new Point(914, 98);
+            label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(200, 25);
+            label3.Size = new Size(134, 15);
             label3.TabIndex = 8;
             label3.Text = "Descripción del artículo:";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(1306, 364);
+            label4.Location = new Point(914, 218);
+            label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(191, 25);
+            label4.Size = new Size(129, 15);
             label4.TabIndex = 9;
             label4.Text = "Cantidad en existencia:";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(1306, 448);
+            label5.Location = new Point(914, 269);
+            label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new Size(129, 25);
+            label5.Size = new Size(87, 15);
             label5.TabIndex = 10;
             label5.Text = "Precio unitario:";
             // 
             // nudStock
             // 
-            nudStock.Location = new Point(1306, 401);
+            nudStock.Location = new Point(914, 241);
+            nudStock.Margin = new Padding(2, 2, 2, 2);
             nudStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             nudStock.Name = "nudStock";
-            nudStock.Size = new Size(180, 31);
+            nudStock.Size = new Size(126, 23);
             nudStock.TabIndex = 11;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(1306, 545);
+            label6.Location = new Point(914, 327);
+            label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
-            label6.Size = new Size(168, 25);
+            label6.Size = new Size(112, 15);
             label6.TabIndex = 12;
             label6.Text = "Imagen del artículo:";
             // 
@@ -160,10 +172,11 @@
             // 
             // btnActualizarArticulo
             // 
-            btnActualizarArticulo.BackColor = Color.Lime;
-            btnActualizarArticulo.Location = new Point(1306, 856);
+            btnActualizarArticulo.BackColor = Color.FromArgb(128, 255, 128);
+            btnActualizarArticulo.Location = new Point(914, 514);
+            btnActualizarArticulo.Margin = new Padding(2, 2, 2, 2);
             btnActualizarArticulo.Name = "btnActualizarArticulo";
-            btnActualizarArticulo.Size = new Size(299, 57);
+            btnActualizarArticulo.Size = new Size(209, 34);
             btnActualizarArticulo.TabIndex = 13;
             btnActualizarArticulo.Text = "Actualizar artículo";
             btnActualizarArticulo.UseVisualStyleBackColor = false;
@@ -173,9 +186,10 @@
             // 
             btnSwitchEstado.BackColor = Color.FromArgb(255, 128, 128);
             btnSwitchEstado.ForeColor = SystemColors.ActiveCaptionText;
-            btnSwitchEstado.Location = new Point(1631, 840);
+            btnSwitchEstado.Location = new Point(1142, 504);
+            btnSwitchEstado.Margin = new Padding(2, 2, 2, 2);
             btnSwitchEstado.Name = "btnSwitchEstado";
-            btnSwitchEstado.Size = new Size(148, 73);
+            btnSwitchEstado.Size = new Size(104, 44);
             btnSwitchEstado.TabIndex = 14;
             btnSwitchEstado.Text = "Habilitar / Deshabilitar";
             btnSwitchEstado.UseVisualStyleBackColor = false;
@@ -185,9 +199,10 @@
             // 
             btnAdjuntarFoto.BackColor = SystemColors.ActiveCaption;
             btnAdjuntarFoto.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdjuntarFoto.Location = new Point(1631, 583);
+            btnAdjuntarFoto.Location = new Point(1142, 350);
+            btnAdjuntarFoto.Margin = new Padding(2, 2, 2, 2);
             btnAdjuntarFoto.Name = "btnAdjuntarFoto";
-            btnAdjuntarFoto.Size = new Size(148, 53);
+            btnAdjuntarFoto.Size = new Size(104, 32);
             btnAdjuntarFoto.TabIndex = 15;
             btnAdjuntarFoto.Text = "Modificar imagen";
             btnAdjuntarFoto.UseVisualStyleBackColor = false;
@@ -195,7 +210,7 @@
             // 
             // ListadoArticulos
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnAdjuntarFoto);
             Controls.Add(btnSwitchEstado);
@@ -212,8 +227,9 @@
             Controls.Add(txtNombreArticulo);
             Controls.Add(label1);
             Controls.Add(tbl_Articulos);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "ListadoArticulos";
-            Size = new Size(1811, 959);
+            Size = new Size(1268, 575);
             Load += ListadoArticulos_Load;
             Enter += ListadoArticulos_Enter;
             ((System.ComponentModel.ISupportInitialize)tbl_Articulos).EndInit();

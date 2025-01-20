@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RoomBox___DataPortal.Dtos;
+using RoomBox___DataPortal.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +21,6 @@ namespace RoomBox___DataPortal
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtUsername_MultilineChanged(object sender, EventArgs e)
@@ -28,6 +29,16 @@ namespace RoomBox___DataPortal
         }
 
         private void txtUsername_ModifiedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbl_Articulos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
