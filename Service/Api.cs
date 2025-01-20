@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using RoomBox___DataPortal.Dtos;
-using RoomBox___DataPortal.Dtos.ArticleFrequencyResponse;
+using RoomBox___DataPortal.Dtos.ArticleFrequency;
+using RoomBox___DataPortal.Dtos.GetUsuarios;
+using RoomBox___DataPortal.Dtos.MonthlySales;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -34,6 +36,12 @@ namespace RoomBox___DataPortal.Service
             return _instance;
         }
 
+        public void clearToken()
+        {
+            _accessToken = null;
+            _refreshToken = null;
+        }
+
         public async Task<LoginResponse> tryLogin(string username, string password)
         {
             LoginRequest loginRequest = new LoginRequest()
@@ -53,7 +61,7 @@ namespace RoomBox___DataPortal.Service
                 LoginResponse resInfo = JsonConvert.DeserializeObject<LoginResponse>(resContent);
                 _accessToken = resInfo.access;
                 _refreshToken = resInfo.refresh;
-                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
+                //_httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
                 return resInfo;
             }
             catch (Exception ex)
@@ -62,9 +70,10 @@ namespace RoomBox___DataPortal.Service
             }
         }
 
-        public async Task<ArticlesResponse> tryGetArticles()
+        public async Task<ArticlesResponse> tryGetArticles(int page)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/articles/");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/api/articles/?page={page}");
+            request.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
             try
             {
@@ -86,6 +95,7 @@ namespace RoomBox___DataPortal.Service
             {
 
                 formData.Add(new StringContent(newStatus.ToString()), "article_status");
+                formData.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
                 try
                 {
@@ -127,9 +137,12 @@ namespace RoomBox___DataPortal.Service
 
                 if (article.ArticleName != null) formData.Add(new StringContent(article.ArticleName.ToString()!), "article_name");
                 formData.Add(new StringContent(article.ArticleStock.ToString()!), "article_stock");
+                if (article.ArticleDescription != null) formData.Add(new StringContent(article.ArticleDescription.ToString()!), "article_description");
+                if (article.ArticleType != null) formData.Add(new StringContent(article.ArticleType.ToString()!), "article_type");
                 if (article.ArticleUnitPrice != null) formData.Add(new StringContent(article.ArticleUnitPrice.ToString()!), "article_unit_price");
                 formData.Add(new StringContent(article.ArticleStatus.ToString()!), "article_status");
                 formData.Add(new StringContent("1"), "client");
+                formData.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
                 try
                 {
@@ -163,14 +176,43 @@ namespace RoomBox___DataPortal.Service
 
         public async Task<List<ArticleFrequencyResponse>> tryGetFrequency(int articleId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/articles/?ordering=total_quantity_ordered");
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/articles/order_frequency/?ordering=total_quantity_ordered");
+            if (articleId != 0)
+            {
+                request = new HttpRequestMessage(HttpMethod.Get, $"/api/articles/order_frequency/?ordering=total_quantity_ordered&article_id={articleId}");
+            }
+            request.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
             try
             {
                 var res = await _httpClient.SendAsync(request);
                 res.EnsureSuccessStatusCode();
                 var resContent = await res.Content.ReadAsStringAsync();
-                return ArticleFrequencyResponse.FromJson(resContent);
+                if (articleId == 0)
+                {
+                    return ArticleFrequencyResponse.FromJson(resContent);
+                } else
+                {
+                    return new List<ArticleFrequencyResponse>() { ArticleFrequencyResponse.FromJsonUnique(resContent) };
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<MonthlySales>> tryGetMonthlySales()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/orders/monthly_sales/");
+            request.Headers.Add("Authorization", $"Bearer {_accessToken}");
+
+            try
+            {
+                var res = await _httpClient.SendAsync(request);
+                res.EnsureSuccessStatusCode();
+                var resContent = await res.Content.ReadAsStringAsync();
+                return MonthlySales.FromJson(resContent);
             }
             catch (Exception e)
             {
@@ -196,10 +238,13 @@ namespace RoomBox___DataPortal.Service
 
                 if (article.Client != null) formData.Add(new StringContent(article.Client.ToString()!), "client");
                 if (article.ArticleName != null) formData.Add(new StringContent(article.ArticleName.ToString()!), "article_name");
+                if (article.ArticleDescription != null) formData.Add(new StringContent(article.ArticleDescription.ToString()!), "article_description");
+                if (article.ArticleType != null) formData.Add(new StringContent(article.ArticleType.ToString()!), "article_type");
                 formData.Add(new StringContent(article.ArticleStock.ToString()!), "article_stock");
                 if (article.ArticleUnitPrice != null) formData.Add(new StringContent(article.ArticleUnitPrice.ToString()!), "article_unit_price");
                 formData.Add(new StringContent(article.ArticleStatus.ToString()!), "article_status");
                 formData.Add(new StringContent(article.ArticleId.ToString()!), "article_id");
+                formData.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
                 try
                 {
@@ -234,6 +279,7 @@ namespace RoomBox___DataPortal.Service
         public async Task<GetUsuarios> tryGetStaff()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "/api/staff/");
+            request.Headers.Add("Authorization", $"Bearer {_accessToken}");
 
             try
             {

@@ -43,6 +43,8 @@
             btnAdjuntarFoto = new Button();
             btnEliminarImagen = new Button();
             btnReset = new Button();
+            cboCategoria = new ComboBox();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)nudStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbImagenArticulo).BeginInit();
             SuspendLayout();
@@ -51,7 +53,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(749, 42);
+            label1.Location = new Point(723, 45);
             label1.Name = "label1";
             label1.Size = new Size(356, 38);
             label1.TabIndex = 2;
@@ -60,7 +62,7 @@
             // btnCrearArticulo
             // 
             btnCrearArticulo.BackColor = Color.Lime;
-            btnCrearArticulo.Location = new Point(749, 765);
+            btnCrearArticulo.Location = new Point(723, 741);
             btnCrearArticulo.Name = "btnCrearArticulo";
             btnCrearArticulo.Size = new Size(356, 57);
             btnCrearArticulo.TabIndex = 24;
@@ -71,7 +73,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(987, 123);
+            label6.Location = new Point(980, 126);
             label6.Name = "label6";
             label6.Size = new Size(168, 25);
             label6.TabIndex = 23;
@@ -79,16 +81,16 @@
             // 
             // nudStock
             // 
-            nudStock.Location = new Point(586, 438);
+            nudStock.Location = new Point(446, 438);
             nudStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             nudStock.Name = "nudStock";
-            nudStock.Size = new Size(180, 31);
+            nudStock.Size = new Size(191, 31);
             nudStock.TabIndex = 22;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(586, 485);
+            label5.Location = new Point(657, 401);
             label5.Name = "label5";
             label5.Size = new Size(129, 25);
             label5.TabIndex = 21;
@@ -97,7 +99,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(586, 401);
+            label4.Location = new Point(446, 401);
             label4.Name = "label4";
             label4.Size = new Size(191, 25);
             label4.TabIndex = 20;
@@ -106,7 +108,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(586, 200);
+            label3.Location = new Point(446, 200);
             label3.Name = "label3";
             label3.Size = new Size(200, 25);
             label3.TabIndex = 19;
@@ -115,7 +117,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(586, 123);
+            label2.Location = new Point(446, 123);
             label2.Name = "label2";
             label2.Size = new Size(174, 25);
             label2.TabIndex = 18;
@@ -123,7 +125,7 @@
             // 
             // pbImagenArticulo
             // 
-            pbImagenArticulo.Location = new Point(987, 161);
+            pbImagenArticulo.Location = new Point(980, 164);
             pbImagenArticulo.Name = "pbImagenArticulo";
             pbImagenArticulo.Size = new Size(428, 395);
             pbImagenArticulo.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -133,31 +135,31 @@
             // 
             // txtUnitPrice
             // 
-            txtUnitPrice.Location = new Point(586, 513);
+            txtUnitPrice.Location = new Point(657, 437);
             txtUnitPrice.Name = "txtUnitPrice";
-            txtUnitPrice.Size = new Size(299, 31);
+            txtUnitPrice.Size = new Size(190, 31);
             txtUnitPrice.TabIndex = 16;
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(586, 228);
+            txtDescripcion.Location = new Point(446, 228);
             txtDescripcion.Multiline = true;
             txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.Size = new Size(299, 160);
+            txtDescripcion.Size = new Size(401, 160);
             txtDescripcion.TabIndex = 15;
             // 
             // txtNombreArticulo
             // 
-            txtNombreArticulo.Location = new Point(586, 151);
+            txtNombreArticulo.Location = new Point(446, 151);
             txtNombreArticulo.Name = "txtNombreArticulo";
-            txtNombreArticulo.Size = new Size(299, 31);
+            txtNombreArticulo.Size = new Size(401, 31);
             txtNombreArticulo.TabIndex = 14;
             // 
             // btnAdjuntarFoto
             // 
             btnAdjuntarFoto.BackColor = SystemColors.ActiveCaption;
             btnAdjuntarFoto.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdjuntarFoto.Location = new Point(987, 581);
+            btnAdjuntarFoto.Location = new Point(980, 584);
             btnAdjuntarFoto.Name = "btnAdjuntarFoto";
             btnAdjuntarFoto.Size = new Size(194, 53);
             btnAdjuntarFoto.TabIndex = 25;
@@ -169,7 +171,7 @@
             // 
             btnEliminarImagen.BackColor = Color.IndianRed;
             btnEliminarImagen.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEliminarImagen.Location = new Point(1219, 581);
+            btnEliminarImagen.Location = new Point(1212, 584);
             btnEliminarImagen.Name = "btnEliminarImagen";
             btnEliminarImagen.Size = new Size(196, 53);
             btnEliminarImagen.TabIndex = 26;
@@ -180,18 +182,37 @@
             // btnReset
             // 
             btnReset.BackColor = Color.LightGray;
-            btnReset.Location = new Point(586, 581);
+            btnReset.Location = new Point(446, 581);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(299, 57);
+            btnReset.Size = new Size(401, 57);
             btnReset.TabIndex = 27;
             btnReset.Text = "Reestablecer campos";
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
             // 
+            // cboCategoria
+            // 
+            cboCategoria.FormattingEnabled = true;
+            cboCategoria.Location = new Point(446, 526);
+            cboCategoria.Name = "cboCategoria";
+            cboCategoria.Size = new Size(401, 33);
+            cboCategoria.TabIndex = 29;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(446, 488);
+            label7.Name = "label7";
+            label7.Size = new Size(92, 25);
+            label7.TabIndex = 28;
+            label7.Text = "Categoría:";
+            // 
             // AnadirArticulo
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(cboCategoria);
+            Controls.Add(label7);
             Controls.Add(btnReset);
             Controls.Add(btnEliminarImagen);
             Controls.Add(btnAdjuntarFoto);
@@ -209,6 +230,7 @@
             Controls.Add(label1);
             Name = "AnadirArticulo";
             Size = new Size(1824, 911);
+            Load += AnadirArticulo_Load;
             ((System.ComponentModel.ISupportInitialize)nudStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbImagenArticulo).EndInit();
             ResumeLayout(false);
@@ -232,5 +254,7 @@
         private Button btnAdjuntarFoto;
         private Button btnEliminarImagen;
         private Button btnReset;
+        private ComboBox cboCategoria;
+        private Label label7;
     }
 }

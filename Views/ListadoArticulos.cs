@@ -20,6 +20,8 @@ namespace RoomBox___DataPortal.Views
         private Article _currentArticle { get; set; }
         private Article tmpArticle { get; set; }
 
+        private String[] articleCategories = new String[] { "SOFA", "MESA", "SILLA", "CAMA", "ARMARIO", "ESTANTERIA", "ESCRITORIO", "COMODA", "LAMPARA", "ESPEJO", "ALFOMBRA", "DECORACION" };
+
         public ListadoArticulos()
         {
             InitializeComponent();
@@ -28,16 +30,14 @@ namespace RoomBox___DataPortal.Views
 
         private async void ListadoArticulos_Load(object sender, EventArgs e)
         {
+            cboCategoria.Items.Clear();
+            cboCategoria.DataSource = articleCategories;
+            cboCategoria.Text = "";
+            cboCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
+
             Api http = Api.getInstance();
-            var articles = await http.tryGetArticles();
-            if (articles != null)
-            {
-                _articles = articles.Results;
-            }
-            else
-            {
-                MessageBox.Show("Por el momento no podemos procesar su transaccion", "Error en la integracion", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            _articles = await reloadArticles();
+
             tbl_Articulos.DataSource = _articles;
             tbl_Articulos.ReadOnly = true;
             tbl_Articulos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -45,18 +45,41 @@ namespace RoomBox___DataPortal.Views
             tbl_Articulos.Refresh();
         }
 
-        private async void reloadArticles()
+        private async Task<List<Article>> reloadArticles()
         {
+            bool keepGoing = true;
+            int counter = 1;
+            ArticlesResponse response;
+            List<Article> articles = new List<Article>();
+
             Api http = Api.getInstance();
-            var articles = await http.tryGetArticles();
-            if (articles != null)
+
+            while (keepGoing)
             {
-                _articles = articles.Results;
+                response = await http.tryGetArticles(counter);
+                if (response != null)
+                {
+                    foreach (Article art in response.Results)
+                    {
+                        articles.Add(art);
+                    }
+                    if (response.Next != null)
+                    {
+                        counter++;
+                    } else
+                    {
+                        keepGoing = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Por el momento no podemos procesar su transaccion", "Error en la integracion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    keepGoing = false;
+                }
             }
-            else
-            {
-                MessageBox.Show("Por el momento no podemos procesar su transaccion", "Error en la integracion", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            return articles;
+            
         }
 
         private void refreshTable()
@@ -73,6 +96,7 @@ namespace RoomBox___DataPortal.Views
             bool condition = !(String.IsNullOrWhiteSpace(txtNombreArticulo.Text) ||
                                 String.IsNullOrWhiteSpace(txtUnitPrice.Text) ||
                                 String.IsNullOrWhiteSpace(txtDescripcion.Text) ||
+                                cboCategoria.Text == "" ||
                                 !checkUnitPrice());
             return condition;
         }
@@ -86,7 +110,8 @@ namespace RoomBox___DataPortal.Views
                 // Textos
                 txtNombreArticulo.Text = _currentArticle.ArticleName;
                 //txtDescripcion.Text = _currentArticle.ArticleDescription;
-                txtDescripcion.Text = "Placeholder";
+                txtDescripcion.Text = _currentArticle.ArticleDescription;
+                cboCategoria.Text = _currentArticle.ArticleType;
 
                 // Numeros
                 txtUnitPrice.Text = _currentArticle.ArticleUnitPrice;
@@ -138,6 +163,8 @@ namespace RoomBox___DataPortal.Views
                 tmpArticle.ArticleName = txtNombreArticulo.Text;
                 tmpArticle.ArticleUnitPrice = txtUnitPrice.Text;
                 tmpArticle.ArticleStock = (int)nudStock.Value;
+                tmpArticle.ArticleDescription = txtDescripcion.Text;
+                tmpArticle.ArticleType = cboCategoria.Text;
                 if (pbImagenArticulo.ImageLocation != null)
                 {
                     tmpArticle.ImageUrl = new Uri(pbImagenArticulo.ImageLocation);
@@ -229,9 +256,9 @@ namespace RoomBox___DataPortal.Views
 
         }
 
-        private void ListadoArticulos_Enter(object sender, EventArgs e)
+        private async void ListadoArticulos_Enter(object sender, EventArgs e)
         {
-            reloadArticles();
+            _articles = await reloadArticles();
             refreshTable();
         }
 

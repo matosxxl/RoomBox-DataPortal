@@ -1,5 +1,10 @@
-﻿using RoomBox___DataPortal.Dtos;
+﻿using C1.Chart;
+using C1.Win.Chart;
+using RoomBox___DataPortal.Dtos;
+using RoomBox___DataPortal.Dtos.ArticleFrequency;
+using RoomBox___DataPortal.Dtos.MonthlySales;
 using RoomBox___DataPortal.Dtos.Orders;
+using RoomBox___DataPortal.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,47 +20,86 @@ namespace RoomBox___DataPortal.Views
     public partial class InitialDashboardView : UserControl
     {
         private List<Order> orders = new List<Order>();
+        private List<ArticleFrequencyResponse> _frequencies = new List<ArticleFrequencyResponse>();
+        private List<MonthlySales> _sales = new List<MonthlySales>();
         public InitialDashboardView()
         {
             InitializeComponent();
 
-            // Begin Mock
-            orders.Add(new Order() { Customer = 1, OrderAmount = "7999.99", OrderDatePlaced = DateTime.Now.AddDays(-58), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-58)});
-            orders.Add(new Order() { Customer = 1, OrderAmount = "6999.99", OrderDatePlaced = DateTime.Now.AddDays(-97), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-97) });
-            orders.Add(new Order() { Customer = 1, OrderAmount = "1999.99", OrderDatePlaced = DateTime.Now.AddDays(-22), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-22) });
-            orders.Add(new Order() { Customer = 1, OrderAmount = "765.99", OrderDatePlaced = DateTime.Now.AddDays(-105), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-105) });
-            orders.Add(new Order() { Customer = 1, OrderAmount = "8499.99", OrderDatePlaced = DateTime.Now.AddDays(-34), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-34) });
-            orders.Add(new Order() { Customer = 1, OrderAmount = "12349.99", OrderDatePlaced = DateTime.Now.AddDays(-76), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-76) });
-            orders.Add(new Order() { Customer = 1, OrderAmount = "10000.99", OrderDatePlaced = DateTime.Now.AddDays(-15), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-15) });
-            orders.Add(new Order() { Customer = 1, OrderAmount = "459.99", OrderDatePlaced = DateTime.Now.AddDays(-88), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-88) });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "3516.53", OrderDatePlaced = DateTime.Now.AddDays(-49), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-49) });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "18916.69", OrderDatePlaced = DateTime.Now.AddDays(-68), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-68) });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "18307.38", OrderDatePlaced = DateTime.Now.AddDays(-3), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-3) });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "16358.03", OrderDatePlaced = DateTime.Now.AddDays(-117), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-117) });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "2612.98", OrderDatePlaced = DateTime.Now.AddDays(-43), OrderStatus = "Placed", CreatedAt = DateTime.Now.AddDays(-43) });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "16500.33", OrderDatePlaced = DateTime.Now, OrderStatus = "Placed", CreatedAt = DateTime.Now });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "10171.81", OrderDatePlaced = DateTime.Now, OrderStatus = "Placed", CreatedAt = DateTime.Now });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "3227.16", OrderDatePlaced = DateTime.Now, OrderStatus = "Placed", CreatedAt = DateTime.Now });
-            orders.Add(new Order() { Customer = 2, OrderAmount = "7520.18", OrderDatePlaced = DateTime.Now, OrderStatus = "Placed", CreatedAt = DateTime.Now });
+        }
 
+        private async void loadFrequencies()
+        {
+            Api http = Api.getInstance();
+            var frequencies = await http.tryGetFrequency(0);
 
-            var salesData = new List<SalesDto>();
-            salesData.Add(new SalesDto() { Mes = "Enero", Ventas = 2500, Gastos = 1200 });
-            salesData.Add(new SalesDto() { Mes = "Febrero", Ventas = 2750, Gastos = 850 });
-            salesData.Add(new SalesDto() { Mes = "Marzo", Ventas = 3185, Gastos = 643 });
-            salesData.Add(new SalesDto() { Mes = "Abril", Ventas = 3444, Gastos = 601 });
+            if (frequencies != null)
+            {
+                _frequencies = frequencies.OrderByDescending(f => f.TotalQuantityOrdered).ToList();
+                monthlyRevenue.DataSource = frequencies;
+                // Configure FlexChart
+                monthlyRevenue.ChartType = ChartType.Bar; // Use vertical bar chart
+                monthlyRevenue.DataSource = _frequencies; // Bind the data source
+                monthlyRevenue.BindingX = "ArticleName"; // Bind X-axis to article names
+                monthlyRevenue.Series.Clear();
 
-            monthlyRevenue.DataSource = orders;
-            monthlyRevenue.Binding = "OrderAmount";
-            monthlyRevenue.BindingX = "OrderDatePlaced";
-            monthlyRevenue.Refresh();
+                // Add a series to represent the total quantity ordered
+                var series = new Series
+                {
+                    Name = "Orders",
+                    Binding = "TotalQuantityOrdered" // Bind Y-axis to the total quantity
+                };
+                monthlyRevenue.Series.Add(series);
+                monthlyRevenue.AxisY.Reversed = true;
 
-            bestSellingChart.DataSource = salesData;
-            bestSellingChart.Binding = "Ventas";
-            bestSellingChart.BindingName = "Articulos";
-            bestSellingChart.DataLabel.Content = "{name} : {p:0}%";
-            bestSellingChart.Header.Content = "Ejemplo de grafica a mostrar";
-            bestSellingChart.Refresh();
+                // Optional: Add title
+                monthlyRevenue.Header.Content = $"Articulos mas vendidos ({_frequencies[0].TimePeriod})";
+                monthlyRevenue.Header.Style.Font = new Font("Arial", 14, FontStyle.Bold);
+
+                // Optional: Customize axis
+                monthlyRevenue.AxisX.Title = "Cantidad vendida";
+                monthlyRevenue.AxisY.Title = "Articulos";
+
+                // Optional: Customize legend
+                monthlyRevenue.Legend.Position = Position.Right;
+                monthlyRevenue.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("Por el momento no podemos procesar su transaccion", "Error en la integracion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void loadMonthlySales()
+        {
+            Api http = Api.getInstance();
+            var sales = await http.tryGetMonthlySales();
+
+            if (sales != null)
+            {
+                _sales = sales.Where(f => f.Month != "Undefined").ToList();
+
+                // Configure the FlexPie
+                bestSellingChart.DataSource = _sales; // Bind the data
+                bestSellingChart.Binding = "Total"; // Bind the value field (Total)
+                bestSellingChart.BindingName = "Month"; // Bind the name field (Month)
+
+                // Optional: Customize title
+                bestSellingChart.Header.Content = "Ventas Mensuales"; // Chart title
+                bestSellingChart.Header.Style.Font = new Font("Arial", 14, FontStyle.Bold);
+
+                // Optional: Customize legend
+                bestSellingChart.Legend.Position = C1.Chart.Position.Right; // Place legend to the right
+
+                // Refresh the chart to apply changes
+                bestSellingChart.Refresh();
+            }
+        }
+
+        private void InitialDashboardView_Load(object sender, EventArgs e)
+        {
+            loadFrequencies();
+            loadMonthlySales();
         }
     }
 }

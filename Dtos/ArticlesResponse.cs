@@ -47,6 +47,12 @@ namespace RoomBox___DataPortal.Dtos
         [JsonProperty("article_name")]
         public string ArticleName { get; set; }
 
+        [JsonProperty("article_description")]
+        public string ArticleDescription { get; set; }
+
+        [JsonProperty("article_type")]
+        public string ArticleType { get; set; }
+
         [JsonProperty("article_stock")]
         public int ArticleStock { get; set; }
 

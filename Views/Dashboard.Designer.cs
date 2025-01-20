@@ -32,10 +32,6 @@
             inicioToolStripMenuItem = new ToolStripMenuItem();
             metricasMenuItem = new ToolStripMenuItem();
             productosMenuItem = new ToolStripMenuItem();
-            rendimientoAnualMenuItem = new ToolStripMenuItem();
-            rendimientoMensualMenuItem = new ToolStripMenuItem();
-            rendimientoSemanalMenuItem = new ToolStripMenuItem();
-            rendimientoHistoricoMenuItem = new ToolStripMenuItem();
             articulosMenuItem = new ToolStripMenuItem();
             anadirArticulosMenuItem = new ToolStripMenuItem();
             catalogoArticulosMenuItem = new ToolStripMenuItem();
@@ -77,34 +73,10 @@
             // 
             // productosMenuItem
             // 
-            productosMenuItem.DropDownItems.AddRange(new ToolStripItem[] { rendimientoAnualMenuItem, rendimientoMensualMenuItem, rendimientoSemanalMenuItem, rendimientoHistoricoMenuItem });
             productosMenuItem.Name = "productosMenuItem";
-            productosMenuItem.Size = new Size(270, 34);
+            productosMenuItem.Size = new Size(183, 34);
             productosMenuItem.Text = "Artículos";
-            // 
-            // rendimientoAnualMenuItem
-            // 
-            rendimientoAnualMenuItem.Name = "rendimientoAnualMenuItem";
-            rendimientoAnualMenuItem.Size = new Size(290, 34);
-            rendimientoAnualMenuItem.Text = "Rendimiento Anual";
-            // 
-            // rendimientoMensualMenuItem
-            // 
-            rendimientoMensualMenuItem.Name = "rendimientoMensualMenuItem";
-            rendimientoMensualMenuItem.Size = new Size(290, 34);
-            rendimientoMensualMenuItem.Text = "Rendimiento Mensual";
-            // 
-            // rendimientoSemanalMenuItem
-            // 
-            rendimientoSemanalMenuItem.Name = "rendimientoSemanalMenuItem";
-            rendimientoSemanalMenuItem.Size = new Size(290, 34);
-            rendimientoSemanalMenuItem.Text = "Rendimiento Semanal";
-            // 
-            // rendimientoHistoricoMenuItem
-            // 
-            rendimientoHistoricoMenuItem.Name = "rendimientoHistoricoMenuItem";
-            rendimientoHistoricoMenuItem.Size = new Size(290, 34);
-            rendimientoHistoricoMenuItem.Text = "Rendimiento Histórico";
+            productosMenuItem.Click += productosMenuItem_Click;
             // 
             // articulosMenuItem
             // 
@@ -146,6 +118,7 @@
             usuariosPersonalMenuItem.Name = "usuariosPersonalMenuItem";
             usuariosPersonalMenuItem.Size = new Size(311, 34);
             usuariosPersonalMenuItem.Text = "Usuarios Personal";
+            usuariosPersonalMenuItem.Click += usuariosPersonalMenuItem_Click;
             // 
             // cuentaMenuItem
             // 
@@ -156,15 +129,17 @@
             // 
             // actualizarDatosMenuItem
             // 
+            actualizarDatosMenuItem.Enabled = false;
             actualizarDatosMenuItem.Name = "actualizarDatosMenuItem";
-            actualizarDatosMenuItem.Size = new Size(242, 34);
+            actualizarDatosMenuItem.Size = new Size(270, 34);
             actualizarDatosMenuItem.Text = "Actualizar Datos";
             // 
             // cerrarSesionMenuItem
             // 
             cerrarSesionMenuItem.Name = "cerrarSesionMenuItem";
-            cerrarSesionMenuItem.Size = new Size(242, 34);
+            cerrarSesionMenuItem.Size = new Size(270, 34);
             cerrarSesionMenuItem.Text = "Cerrar Sesión";
+            cerrarSesionMenuItem.Click += cerrarSesionMenuItem_Click;
             // 
             // aplicacionMenuItem
             // 
@@ -210,10 +185,6 @@
         private ToolStripMenuItem metricasMenuItem;
         private ToolStripMenuItem cuentaMenuItem;
         private ToolStripMenuItem productosMenuItem;
-        private ToolStripMenuItem rendimientoAnualMenuItem;
-        private ToolStripMenuItem rendimientoMensualMenuItem;
-        private ToolStripMenuItem rendimientoSemanalMenuItem;
-        private ToolStripMenuItem rendimientoHistoricoMenuItem;
         private ToolStripMenuItem actualizarDatosMenuItem;
         private ToolStripMenuItem cerrarSesionMenuItem;
         private ToolStripMenuItem aplicacionMenuItem;

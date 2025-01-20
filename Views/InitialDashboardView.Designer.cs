@@ -31,9 +31,7 @@
             C1.Chart.ElementSize elementSize1 = new C1.Chart.ElementSize();
             C1.Win.Chart.Series series1 = new C1.Win.Chart.Series();
             label3 = new Label();
-            label2 = new Label();
             bestSellingChart = new C1.Win.Chart.FlexPie();
-            label1 = new Label();
             monthlyRevenue = new C1.Win.Chart.FlexChart();
             ((System.ComponentModel.ISupportInitialize)monthlyRevenue).BeginInit();
             SuspendLayout();
@@ -42,21 +40,11 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(474, 87);
+            label3.Location = new Point(790, 61);
             label3.Name = "label3";
             label3.Size = new Size(291, 45);
             label3.TabIndex = 10;
             label3.Text = "Bienvenido, admin!";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(705, 231);
-            label2.Name = "label2";
-            label2.Size = new Size(486, 45);
-            label2.TabIndex = 9;
-            label2.Text = "Artículos más vendidos este mes";
             // 
             // bestSellingChart
             // 
@@ -81,10 +69,10 @@
             bestSellingChart.Legend.ScrollBars = C1.Chart.LegendScrollBars.None;
             bestSellingChart.Legend.TextWrapping = C1.Chart.TextWrapping.None;
             bestSellingChart.Legend.Title = null;
-            bestSellingChart.Location = new Point(705, 286);
+            bestSellingChart.Location = new Point(964, 134);
             bestSellingChart.Name = "bestSellingChart";
             bestSellingChart.SelectionStyle.StrokeColor = Color.Red;
-            bestSellingChart.Size = new Size(426, 334);
+            bestSellingChart.Size = new Size(820, 668);
             bestSellingChart.TabIndex = 8;
             bestSellingChart.Text = "flexPie1";
             bestSellingChart.Titles = null;
@@ -92,16 +80,6 @@
             // 
             // 
             bestSellingChart.ToolTip.Content = "";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(153, 231);
-            label1.Name = "label1";
-            label1.Size = new Size(273, 45);
-            label1.TabIndex = 7;
-            label1.Text = "Ventas mensuales";
             // 
             // monthlyRevenue
             // 
@@ -157,7 +135,7 @@
             monthlyRevenue.Legend.TextWrapping = C1.Chart.TextWrapping.None;
             monthlyRevenue.Legend.Title = "";
             monthlyRevenue.LegendToggle = true;
-            monthlyRevenue.Location = new Point(124, 286);
+            monthlyRevenue.Location = new Point(73, 142);
             monthlyRevenue.Margin = new Padding(10);
             monthlyRevenue.Name = "monthlyRevenue";
             monthlyRevenue.Options.Chart = monthlyRevenue;
@@ -174,7 +152,7 @@
             series1.Style.StrokeWidth = 2F;
             series1.Tooltip = null;
             monthlyRevenue.Series.Add(series1);
-            monthlyRevenue.Size = new Size(418, 334);
+            monthlyRevenue.Size = new Size(840, 660);
             monthlyRevenue.TabIndex = 6;
             monthlyRevenue.Text = "flexChart1";
             // 
@@ -187,12 +165,11 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(bestSellingChart);
-            Controls.Add(label1);
             Controls.Add(monthlyRevenue);
             Name = "InitialDashboardView";
-            Size = new Size(1307, 731);
+            Size = new Size(1850, 871);
+            Load += InitialDashboardView_Load;
             ((System.ComponentModel.ISupportInitialize)monthlyRevenue).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -201,9 +178,7 @@
         #endregion
 
         private Label label3;
-        private Label label2;
         private C1.Win.Chart.FlexPie bestSellingChart;
-        private Label label1;
         private C1.Win.Chart.FlexChart monthlyRevenue;
     }
 }

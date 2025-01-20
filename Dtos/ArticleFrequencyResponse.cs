@@ -5,7 +5,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace RoomBox___DataPortal.Dtos.ArticleFrequencyResponse
+namespace RoomBox___DataPortal.Dtos.ArticleFrequency
 {
 
     public partial class ArticleFrequencyResponse
@@ -26,7 +26,7 @@ namespace RoomBox___DataPortal.Dtos.ArticleFrequencyResponse
         public long TotalQuantityOrdered { get; set; }
 
         [JsonProperty("time_period")]
-        public TimePeriod TimePeriod { get; set; }
+        public string TimePeriod { get; set; }
 
         [JsonProperty("start_date")]
         public DateTimeOffset StartDate { get; set; }
@@ -35,16 +35,19 @@ namespace RoomBox___DataPortal.Dtos.ArticleFrequencyResponse
         public DateTimeOffset EndDate { get; set; }
     }
 
-    public enum TimePeriod { The30Days };
+    public partial class ArticleFrequencyResponse
+    {
+        public static List<ArticleFrequencyResponse> FromJson(string json) => JsonConvert.DeserializeObject<List<ArticleFrequencyResponse>>(json, RoomBox___DataPortal.Dtos.ArticleFrequency.Converter.Settings);
+    }
 
     public partial class ArticleFrequencyResponse
     {
-        public static List<ArticleFrequencyResponse> FromJson(string json) => JsonConvert.DeserializeObject<List<ArticleFrequencyResponse>>(json, RoomBox___DataPortal.Dtos.Converter.Settings);
+        public static ArticleFrequencyResponse FromJsonUnique(string json) => JsonConvert.DeserializeObject<ArticleFrequencyResponse>(json, RoomBox___DataPortal.Dtos.ArticleFrequency.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this List<ArticleFrequencyResponse> self) => JsonConvert.SerializeObject(self, RoomBox___DataPortal.Dtos.Converter.Settings);
+        public static string ToJson(this List<ArticleFrequencyResponse> self) => JsonConvert.SerializeObject(self, RoomBox___DataPortal.Dtos.ArticleFrequency.Converter.Settings);
     }
 
     internal static class Converter
@@ -55,43 +58,8 @@ namespace RoomBox___DataPortal.Dtos.ArticleFrequencyResponse
             DateParseHandling = DateParseHandling.None,
             Converters =
             {
-                TimePeriodConverter.Singleton,
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
-    }
-
-    internal class TimePeriodConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(TimePeriod) || t == typeof(TimePeriod?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            if (value == "30 days")
-            {
-                return TimePeriod.The30Days;
-            }
-            throw new Exception("Cannot unmarshal type TimePeriod");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (TimePeriod)untypedValue;
-            if (value == TimePeriod.The30Days)
-            {
-                serializer.Serialize(writer, "30 days");
-                return;
-            }
-            throw new Exception("Cannot marshal type TimePeriod");
-        }
-
-        public static readonly TimePeriodConverter Singleton = new TimePeriodConverter();
     }
 }

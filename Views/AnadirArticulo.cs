@@ -14,9 +14,19 @@ namespace RoomBox___DataPortal.Views
 {
     public partial class AnadirArticulo : UserControl
     {
+        private String[] articleCategories = new String[] { "SOFA", "MESA", "SILLA", "CAMA", "ARMARIO", "ESTANTERIA", "ESCRITORIO", "COMODA", "LAMPARA", "ESPEJO", "ALFOMBRA", "DECORACION" };
+
         public AnadirArticulo()
         {
             InitializeComponent();
+        }
+
+        private void AnadirArticulo_Load(object sender, EventArgs e)
+        {
+            cboCategoria.Items.Clear();
+            cboCategoria.DataSource = articleCategories;
+            cboCategoria.Text = "";
+            cboCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private bool isFormComplete()
@@ -24,6 +34,7 @@ namespace RoomBox___DataPortal.Views
             bool condition = !(String.IsNullOrWhiteSpace(txtNombreArticulo.Text) ||
                                 String.IsNullOrWhiteSpace(txtUnitPrice.Text) ||
                                 String.IsNullOrWhiteSpace(txtDescripcion.Text) ||
+                                cboCategoria.Text == "" ||
                                 !checkUnitPrice());
             return condition;
         }
@@ -33,6 +44,7 @@ namespace RoomBox___DataPortal.Views
             txtNombreArticulo.Text = "";
             txtDescripcion.Text = "";
             nudStock.Value = 0;
+            cboCategoria.Text = "";
             txtUnitPrice.Text = "";
         }
 
@@ -95,6 +107,8 @@ namespace RoomBox___DataPortal.Views
             Article nuevoArticulo = new Article();
             nuevoArticulo.ArticleName = txtNombreArticulo.Text;
             nuevoArticulo.ArticleUnitPrice = txtUnitPrice.Text;
+            nuevoArticulo.ArticleDescription = txtDescripcion.Text;
+            nuevoArticulo.ArticleType = cboCategoria.Text;
             nuevoArticulo.ArticleStock = Convert.ToInt32(nudStock.Value);
             nuevoArticulo.ArticleStatus = true;
 
@@ -110,7 +124,7 @@ namespace RoomBox___DataPortal.Views
                 result = await http.tryCreateArticle(nuevoArticulo, null);
             }
 
-            if ( result != false)
+            if (result != false)
             {
                 MessageBox.Show($"Se ha creado el artículo con exito!", "Operacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -120,5 +134,6 @@ namespace RoomBox___DataPortal.Views
             }
 
         }
+
     }
 }

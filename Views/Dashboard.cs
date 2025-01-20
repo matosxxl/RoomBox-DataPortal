@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using RoomBox___DataPortal.Dtos;
 using C1.Win.Chart;
 using RoomBox___DataPortal.Views;
+using RoomBox___DataPortal.Service;
 
 namespace RoomBox___DataPortal
 {
@@ -23,6 +24,7 @@ namespace RoomBox___DataPortal
         readonly anadirusuario _anadirusuario;
         readonly anadirpersonal _anadirpersonal;
         readonly AnadirArticulo _anadirArticulo;
+        readonly EstadisticasArticulos _estadisticasArticulos;
         public Dashboard(LoginResponse loginInfo)
         {
             InitializeComponent();
@@ -32,13 +34,17 @@ namespace RoomBox___DataPortal
             _anadirusuario = new anadirusuario() { Dock = DockStyle.Fill };
             _anadirArticulo = new AnadirArticulo() { Dock = DockStyle.Fill };
             _anadirpersonal = new anadirpersonal() { Dock = DockStyle.Fill };
+            _estadisticasArticulos = new EstadisticasArticulos() { Dock =DockStyle.Fill };
 
         }
 
         private void salirMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult confirm = MessageBox.Show("¿Desea salir de la aplicación?", "Esto cerrará su sesión y se perderán los cambios no guardados", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            this.DialogResult = confirm;
+            if (confirm == DialogResult.OK)
+            {
+                this.DialogResult = confirm;
+            }
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -65,7 +71,7 @@ namespace RoomBox___DataPortal
         {
             SwapView(_anadirusuario);
         }
-     
+
 
         private void usuariosPersonalMenuItem_Click(object sender, EventArgs e)
         {
@@ -75,6 +81,18 @@ namespace RoomBox___DataPortal
         private void anadirArticulosMenuItem_Click(object sender, EventArgs e)
         {
             SwapView(_anadirArticulo);
+        }
+
+        private void cerrarSesionMenuItem_Click(object sender, EventArgs e)
+        {
+            Api http = Api.getInstance();
+            http.clearToken();
+            this.DialogResult = DialogResult.Continue;
+        }
+
+        private void productosMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_estadisticasArticulos);
         }
     }
 }

@@ -16,7 +16,7 @@ using System.Text.Json;
 //
 //    var getUsuarios = GetUsuarios.FromJson(jsonString);
 
-namespace RoomBox___DataPortal.Dtos
+namespace RoomBox___DataPortal.Dtos.GetUsuarios
 {
     using System;
     using System.Collections.Generic;

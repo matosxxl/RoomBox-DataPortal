@@ -44,6 +44,10 @@ namespace RoomBox___DataPortal
                 {
                     Application.Exit();
                 }
+                txtUsername.Text = "";
+                txtClave.Text = "";
+                username = "";
+                clave = "";
             }
             this.Show();
             btnIniciarSesion.Enabled = true;
