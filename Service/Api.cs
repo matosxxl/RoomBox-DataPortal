@@ -161,6 +161,23 @@ namespace RoomBox___DataPortal.Service
 
         } // End of method
 
+        public async Task<List<ArticleFrequencyResponse>> tryGetFrequency(int articleId)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "/api/articles/?ordering=total_quantity_ordered");
+
+            try
+            {
+                var res = await _httpClient.SendAsync(request);
+                res.EnsureSuccessStatusCode();
+                var resContent = await res.Content.ReadAsStringAsync();
+                return ArticleFrequencyResponse.FromJson(resContent);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public async Task<Article> tryUpdateArticle(Article article, string imagePath)
         {
             FileStream fs = null;
@@ -213,22 +230,5 @@ namespace RoomBox___DataPortal.Service
             } // End of using
 
         } // End of method
-
-        public async Task<List<ArticleFrequencyResponse>> tryGetFrequency(int articleId)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, "/api/articles/?ordering=total_quantity_ordered");
-
-            try
-            {
-                var res = await _httpClient.SendAsync(request);
-                res.EnsureSuccessStatusCode();
-                var resContent = await res.Content.ReadAsStringAsync();
-                return ArticleFrequencyResponse.FromJson(resContent);
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
     }
 }
